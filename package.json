@@ -1,21 +1,35 @@
 {
 	"dependencies": {
 		"@base-ui/react": "^1.7.0",
+		"@prisma/client": "^6.19.3",
+		"@react-email/components": "^1.0.12",
+		"@react-email/render": "^2.1.0",
+		"bcryptjs": "^3.0.3",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
+		"input-otp": "^1.4.2",
 		"lucide-react": "^1.31.0",
 		"next": "16.3.1",
+		"next-auth": "^5.0.0-beta.32",
+		"next-themes": "^0.4.6",
+		"nodemailer": "^8.0.11",
 		"postcss": "^8.5.26",
+		"prisma": "^6.19.3",
 		"react": "19.2.8",
 		"react-dom": "19.2.8",
 		"shadcn": "^4.18.0",
+		"sonner": "^2.0.8",
 		"tailwind-merge": "^3.6.0",
-		"tw-animate-css": "^1.4.0"
+		"tsx": "^4.23.12",
+		"tw-animate-css": "^1.4.0",
+		"zod": "^4.4.3"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.16",
 		"@tailwindcss/postcss": "^4.3.3",
+		"@types/bcryptjs": "^2.4.6",
 		"@types/node": "^20",
+		"@types/nodemailer": "^8.0.1",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
 		"babel-plugin-react-compiler": "1.0.0",
@@ -25,6 +39,9 @@
 		"typescript": "^5"
 	},
 	"name": "5-inventory-management-system-nextjs",
+	"prisma": {
+		"seed": "tsx prisma/seed.ts"
+	},
 	"private": true,
 	"scripts": {
 		"biome:check": "biome check --write",
@@ -33,6 +50,11 @@
 		"biome:format": "biome format --write",
 		"biome:lint": "biome lint --write",
 		"build": "next build",
+		"db:generate": "prisma generate",
+		"db:migrate": "prisma migrate dev",
+		"db:push": "prisma db push",
+		"db:seed": "prisma db seed",
+		"db:studio": "prisma studio",
 		"dev": "next dev",
 		"lint": "eslint",
 		"lint:fix": "eslint --fix",

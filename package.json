@@ -1,30 +1,36 @@
 {
-  "name": "5-inventory-management-system-nextjs",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "predev": "npx kill-port 3000",
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "lint:fix": "eslint --fix"
-  },
-  "dependencies": {
-    "next": "16.3.1",
-    "postcss": "^8.5.26",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.3",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "babel-plugin-react-compiler": "1.0.0",
-    "eslint": "^9",
-    "eslint-config-next": "16.3.1",
-    "tailwindcss": "^4.3.3",
-    "typescript": "^5"
-  }
+	"dependencies": {
+		"next": "16.3.1",
+		"postcss": "^8.5.26",
+		"react": "19.2.8",
+		"react-dom": "19.2.8"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.4.16",
+		"@tailwindcss/postcss": "^4.3.3",
+		"@types/node": "^20",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"babel-plugin-react-compiler": "1.0.0",
+		"eslint": "^9",
+		"eslint-config-next": "16.3.1",
+		"tailwindcss": "^4.3.3",
+		"typescript": "^5"
+	},
+	"name": "5-inventory-management-system-nextjs",
+	"private": true,
+	"scripts": {
+		"biome:check": "biome check --write",
+		"biome:check:unsafe": "biome check --write --unsafe",
+		"biome:ci": "biome ci",
+		"biome:format": "biome format --write",
+		"biome:lint": "biome lint --write",
+		"build": "next build",
+		"dev": "next dev",
+		"lint": "eslint",
+		"lint:fix": "eslint --fix",
+		"predev": "npx kill-port 3000",
+		"start": "next start"
+	},
+	"version": "0.1.0"
 }

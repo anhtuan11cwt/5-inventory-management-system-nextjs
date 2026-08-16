@@ -22,9 +22,40 @@ model Organization {
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
 
-  users User[]
+  users   User[]
+  roles   Role[]
+  invites Invite[]
 
   @@map("organizations")
+}
+
+model Role {
+  id             String       @id @default(cuid())
+  name           String
+  permissions    String[]
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  users   User[]
+  invites Invite[]
+
+  @@unique([organizationId, name])
+  @@map("roles")
+}
+
+model Invite {
+  id             String       @id @default(cuid())
+  email          String       @unique
+  status         Boolean      @default(false)
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  roleId         String
+  role           Role         @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+
+  @@map("invites")
 }
 
 model User {
@@ -32,12 +63,13 @@ model User {
   name             String
   email            String       @unique
   password         String
-  role             String       @default("USER")
   isVerified       Boolean      @default(false)
   token            String?
   organizationId   String
   organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   organizationName String
+  roleId           String
+  role             Role         @relation(fields: [roleId], references: [id], onDelete: Cascade)
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
 

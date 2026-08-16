@@ -1,6 +1,8 @@
 import { Footer } from "@/components/landing/footer";
 import { Navbar } from "@/components/landing/navbar";
 
+export const dynamic = "force-dynamic";
+
 export default function SiteLayout({ children }: LayoutProps<"/">) {
 	return (
 		<>

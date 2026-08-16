@@ -21,21 +21,27 @@ export default async function VerifyPage(props: PageProps<"/verify/[userId]">) {
 	const registered = searchParams.registered === "1";
 
 	return (
-		<Card className="border-border bg-card shadow-sm">
-			<CardHeader className="items-center text-center">
-				<div className="mb-2 flex size-12 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600">
-					<MailCheck className="size-6" />
-				</div>
-				<CardTitle className="font-heading text-2xl">
-					Xác thực email của bạn
-				</CardTitle>
-				<CardDescription>
-					Xác nhận địa chỉ email để kích hoạt tài khoản của bạn.
-				</CardDescription>
-			</CardHeader>
-			<CardContent>
-				<VerifyOTPForm email={email} showWelcome={registered} userId={userId} />
-			</CardContent>
-		</Card>
+		<div className="mx-auto w-full max-w-md">
+			<Card className="border-border bg-card shadow-sm">
+				<CardHeader className="items-center text-center">
+					<div className="mb-2 flex size-12 items-center justify-center rounded-xl bg-rose-500/10 text-rose-600">
+						<MailCheck className="size-6" />
+					</div>
+					<CardTitle className="font-heading text-2xl">
+						Xác thực email của bạn
+					</CardTitle>
+					<CardDescription>
+						Xác nhận địa chỉ email để kích hoạt tài khoản của bạn.
+					</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<VerifyOTPForm
+						email={email}
+						showWelcome={registered}
+						userId={userId}
+					/>
+				</CardContent>
+			</Card>
+		</div>
 	);
 }

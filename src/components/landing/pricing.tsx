@@ -63,7 +63,7 @@ export function Pricing() {
 		<section className="scroll-mt-20 bg-muted/50 py-20 sm:py-24" id="pricing">
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div className="mx-auto max-w-2xl text-center">
-					<p className="font-semibold text-emerald-600 text-sm uppercase tracking-wider">
+					<p className="font-semibold text-rose-600 text-sm uppercase tracking-wider">
 						Bảng giá
 					</p>
 					<h2 className="mt-2 text-balance font-bold font-heading text-3xl tracking-tight sm:text-4xl">
@@ -109,7 +109,7 @@ export function Pricing() {
 							<ul className="mt-6 flex-1 space-y-2.5">
 								{plan.features.map((feature) => (
 									<li className="flex items-start gap-2 text-sm" key={feature}>
-										<Check className="mt-0.5 size-4 shrink-0 text-emerald-600" />
+										<Check className="mt-0.5 size-4 shrink-0 text-rose-600" />
 										{feature}
 									</li>
 								))}

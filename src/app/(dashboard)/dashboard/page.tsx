@@ -6,6 +6,7 @@ import {
 	ShoppingCart,
 	Wallet,
 } from "lucide-react";
+import { DefaultUserDashboard } from "@/components/dashboard/default-user-dashboard";
 import { Badge } from "@/components/ui/badge";
 import {
 	Card,
@@ -23,6 +24,8 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { auth } from "@/config/auth";
+import { hasPermission } from "@/config/permissions";
+import { filteredSidebarLinks } from "@/config/sidebar";
 
 const stats = [
 	{
@@ -96,6 +99,23 @@ const recentOrders = [
 export default async function DashboardPage() {
 	const session = await auth();
 
+	const permissions = session?.user?.permissions ?? [];
+
+	if (!hasPermission(permissions, "dashboard.read")) {
+		const cards = filteredSidebarLinks(permissions).map((item) => ({
+			href: item.href,
+			icon: item.icon,
+			title: item.title,
+		}));
+
+		return (
+			<DefaultUserDashboard
+				navigationCards={cards}
+				userName={session?.user?.name ?? undefined}
+			/>
+		);
+	}
+
 	return (
 		<div className="space-y-6">
 			<div>
@@ -123,7 +143,7 @@ export default async function DashboardPage() {
 								<p
 									className={
 										stat.trend === "up"
-											? "mt-1 inline-flex items-center gap-1 font-medium text-emerald-600 text-xs"
+											? "mt-1 inline-flex items-center gap-1 font-medium text-rose-600 text-xs"
 											: "mt-1 inline-flex items-center gap-1 font-medium text-destructive text-xs"
 									}
 								>

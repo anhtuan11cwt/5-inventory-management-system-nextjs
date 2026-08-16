@@ -1,5 +1,3 @@
-export type Role = "ADMIN" | "USER";
-
 export type Permission =
 	| "dashboard.read"
 	| "products.read"
@@ -13,31 +11,29 @@ export type Permission =
 	| "users.write"
 	| "settings.read";
 
-export const rolePermissions: Record<Role, Permission[]> = {
-	ADMIN: [
-		"dashboard.read",
-		"products.read",
-		"products.write",
-		"inventory.read",
-		"inventory.write",
-		"sales.read",
-		"purchases.read",
-		"reports.read",
-		"users.read",
-		"users.write",
-		"settings.read",
-	],
-	USER: [
-		"dashboard.read",
-		"products.read",
-		"inventory.read",
-		"sales.read",
-		"purchases.read",
-	],
-};
+export const adminPermissions: Permission[] = [
+	"dashboard.read",
+	"products.read",
+	"products.write",
+	"inventory.read",
+	"inventory.write",
+	"sales.read",
+	"purchases.read",
+	"reports.read",
+	"users.read",
+	"users.write",
+	"settings.read",
+];
+
+export const defaultUserPermissions: Permission[] = [
+	"dashboard.read",
+	"products.read",
+	"inventory.read",
+	"sales.read",
+	"purchases.read",
+];
 
 export const routePermissions: Record<string, Permission> = {
-	"/dashboard": "dashboard.read",
 	"/dashboard/inventory": "inventory.read",
 	"/dashboard/products": "products.read",
 	"/dashboard/products/new": "products.write",
@@ -49,21 +45,25 @@ export const routePermissions: Record<string, Permission> = {
 };
 
 export function hasPermission(
-	role: Role | undefined,
+	permissions: Permission[] | undefined,
 	permission: Permission,
 ): boolean {
-	if (!role) return false;
-	return rolePermissions[role]?.includes(permission) ?? false;
+	if (!permissions) return false;
+	return permissions.includes(permission);
 }
 
 export function canAccessRoute(
-	role: Role | undefined,
+	permissions: Permission[] | undefined,
 	pathname: string,
 ): boolean {
-	const permission = Object.entries(routePermissions).find(
+	const matches = Object.entries(routePermissions).filter(
 		([route]) => pathname === route || pathname.startsWith(`${route}/`),
-	)?.[1];
+	);
 
-	if (!permission) return true;
-	return hasPermission(role, permission);
+	if (matches.length === 0) return true;
+
+	matches.sort((a, b) => b[0].length - a[0].length);
+	const permission = matches[0][1];
+
+	return hasPermission(permissions, permission);
 }

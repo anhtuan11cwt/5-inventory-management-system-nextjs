@@ -12,7 +12,7 @@ export function CTA() {
 						aria-hidden="true"
 						className="pointer-events-none absolute inset-0"
 					>
-						<div className="absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-emerald-500/20 blur-3xl" />
+						<div className="absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-rose-500/20 blur-3xl" />
 						<div className="absolute right-1/4 -bottom-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
 					</div>
 					<div className="relative">

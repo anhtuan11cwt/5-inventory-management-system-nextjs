@@ -9,9 +9,23 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
 	description: siteConfig.description,
+	metadataBase: new URL(siteConfig.url),
+	openGraph: {
+		description: siteConfig.description,
+		locale: "vi_VN",
+		siteName: siteConfig.name,
+		title: siteConfig.name,
+		type: "website",
+		url: siteConfig.url,
+	},
 	title: {
 		default: siteConfig.name,
 		template: `%s | ${siteConfig.name}`,
+	},
+	twitter: {
+		card: "summary_large_image",
+		description: siteConfig.description,
+		title: siteConfig.name,
 	},
 };
 

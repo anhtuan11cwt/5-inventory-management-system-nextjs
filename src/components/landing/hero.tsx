@@ -17,7 +17,7 @@ export function Hero() {
 				aria-hidden="true"
 				className="pointer-events-none absolute inset-0 -z-10"
 			>
-				<div className="absolute -top-40 left-1/2 h-[30rem] w-[60rem] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl" />
+				<div className="absolute -top-40 left-1/2 h-[30rem] w-[60rem] -translate-x-1/2 rounded-full bg-rose-500/10 blur-3xl" />
 				<div className="absolute top-40 right-0 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
 			</div>
 
@@ -28,8 +28,8 @@ export function Hero() {
 						variant="outline"
 					>
 						<span className="relative flex size-2">
-							<span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-							<span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+							<span className="absolute inline-flex size-full animate-ping rounded-full bg-rose-500 opacity-75" />
+							<span className="relative inline-flex size-2 rounded-full bg-rose-500" />
 						</span>
 						Theo dõi tồn kho theo thời gian thực
 					</Badge>
@@ -77,7 +77,7 @@ export function Hero() {
 										Acme Retail · Vừa được cập nhật
 									</p>
 								</div>
-								<div className="flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 font-medium text-emerald-600 text-xs">
+								<div className="flex items-center gap-1.5 rounded-full bg-rose-500/10 px-2.5 py-1 font-medium text-rose-600 text-xs">
 									<TrendingUp className="size-3.5" />
 									+12,4% so với tuần trước
 								</div>

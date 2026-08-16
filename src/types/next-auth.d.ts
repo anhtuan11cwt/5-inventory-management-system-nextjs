@@ -1,10 +1,13 @@
 import type { DefaultSession } from "next-auth";
+import type { Permission } from "@/config/permissions";
 
 declare module "next-auth" {
 	interface Session {
 		user: {
 			id: string;
-			role: "ADMIN" | "USER";
+			roleId: string;
+			roleName: string;
+			permissions: Permission[];
 			organizationId: string;
 			organizationName: string;
 		} & DefaultSession["user"];
@@ -13,7 +16,9 @@ declare module "next-auth" {
 	interface User {
 		organizationId: string;
 		organizationName: string;
-		role: "ADMIN" | "USER";
+		permissions: Permission[];
+		roleId: string;
+		roleName: string;
 	}
 }
 
@@ -22,6 +27,8 @@ declare module "next-auth/jwt" {
 		id: string;
 		organizationId: string;
 		organizationName: string;
-		role: "ADMIN" | "USER";
+		permissions: Permission[];
+		roleId: string;
+		roleName: string;
 	}
 }

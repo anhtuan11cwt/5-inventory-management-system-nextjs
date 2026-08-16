@@ -3,7 +3,7 @@ import type { NextAuthConfig } from "next-auth";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
-
+import type { Permission } from "@/config/permissions";
 import { db } from "@/lib/db";
 
 const credentialsSchema = z.object({
@@ -16,7 +16,9 @@ export const authConfig: NextAuthConfig = {
 		async jwt({ token, user }) {
 			if (user) {
 				token.id = user.id;
-				token.role = user.role;
+				token.roleId = user.roleId;
+				token.roleName = user.roleName;
+				token.permissions = user.permissions;
 				token.organizationId = user.organizationId;
 				token.organizationName = user.organizationName;
 			}
@@ -25,7 +27,9 @@ export const authConfig: NextAuthConfig = {
 		async session({ session, token }) {
 			if (session.user) {
 				session.user.id = token.id as string;
-				session.user.role = token.role as "ADMIN" | "USER";
+				session.user.roleId = token.roleId as string;
+				session.user.roleName = token.roleName as string;
+				session.user.permissions = token.permissions as Permission[];
 				session.user.organizationId = token.organizationId as string;
 				session.user.organizationName = token.organizationName as string;
 			}
@@ -43,6 +47,7 @@ export const authConfig: NextAuthConfig = {
 
 				const { email, password } = parsed.data;
 				const user = await db.user.findUnique({
+					include: { role: true },
 					where: { email: email.toLowerCase() },
 				});
 
@@ -58,7 +63,9 @@ export const authConfig: NextAuthConfig = {
 					name: user.name,
 					organizationId: user.organizationId,
 					organizationName: user.organizationName,
-					role: user.role as "ADMIN" | "USER",
+					permissions: user.role.permissions as Permission[],
+					roleId: user.roleId,
+					roleName: user.role.name,
 				};
 			},
 			credentials: {

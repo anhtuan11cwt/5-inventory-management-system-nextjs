@@ -10,7 +10,7 @@ import {
 	Truck,
 	Users,
 } from "lucide-react";
-import type { Permission } from "@/config/permissions";
+import { hasPermission, type Permission } from "@/config/permissions";
 
 export interface SidebarItem {
 	href: string;
@@ -75,3 +75,12 @@ export const sidebarNav: SidebarItem[] = [
 		title: "Cài đặt",
 	},
 ];
+
+export function filteredSidebarLinks(
+	permissions: Permission[] | undefined,
+): SidebarItem[] {
+	return sidebarNav.filter((item) => {
+		if (!item.permission) return true;
+		return hasPermission(permissions, item.permission);
+	});
+}

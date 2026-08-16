@@ -1,6 +1,7 @@
 import { render } from "@react-email/render";
 import nodemailer from "nodemailer";
 
+import { UserInvite } from "@/emails/UserInvite";
 import { VerifyEmail } from "@/emails/VerifyEmail";
 
 const transporter = nodemailer.createTransport({
@@ -48,6 +49,41 @@ export async function sendVerificationEmail({
 		from: `"Inventory Pro" <${process.env.GMAIL_USER}>`,
 		html,
 		subject: "Xác thực tài khoản của bạn",
+		to,
+	});
+}
+
+export async function sendInviteEmail({
+	to,
+	organizationName,
+	roleName,
+	linkUrl,
+}: {
+	to: string;
+	organizationName: string;
+	roleName: string;
+	linkUrl: string;
+}): Promise<void> {
+	if (!isConfigured()) {
+		console.warn(
+			"[email] GMAIL_USER / GMAIL_APP_PASSWORD chưa được cấu hình. Bỏ qua gửi email mời.",
+			{ organizationName, to },
+		);
+		return;
+	}
+
+	const html = await render(
+		<UserInvite
+			linkUrl={linkUrl}
+			organizationName={organizationName}
+			roleName={roleName}
+		/>,
+	);
+
+	await transporter.sendMail({
+		from: `"Inventory Pro" <${process.env.GMAIL_USER}>`,
+		html,
+		subject: `Bạn được mời tham gia ${organizationName} trên Inventory Pro`,
 		to,
 	});
 }

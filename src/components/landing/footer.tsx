@@ -1,6 +1,7 @@
-import { Globe, Mail, Share2 } from "lucide-react";
+import { Globe, Mail, Share2, Users } from "lucide-react";
 import Link from "next/link";
 
+import { getCurrentUsersCount } from "@/actions/users/count";
 import { Logo } from "@/components/logo";
 import { siteConfig } from "@/config/site";
 
@@ -18,7 +19,9 @@ const companyLinks = [
 	{ href: "#", label: "Liên hệ" },
 ];
 
-export function Footer() {
+export async function Footer() {
+	const usersCount = await getCurrentUsersCount();
+
 	return (
 		<footer className="border-border border-t bg-muted/50">
 			<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -29,6 +32,19 @@ export function Footer() {
 							{siteConfig.slogan}. Theo dõi tồn kho theo thời gian thực, quản lý
 							nhiều địa điểm và tạo báo cáo giúp doanh nghiệp tăng trưởng.
 						</p>
+						<div className="mt-6 inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1.5 text-sm">
+							<Users className="size-4 text-rose-600" />
+							{usersCount > 0 ? (
+								<span className="font-medium text-foreground">
+									{usersCount}
+								</span>
+							) : null}
+							<span className="text-muted-foreground">
+								{usersCount > 0
+									? "người dùng đang quản lý kho hàng"
+									: "Tham gia Inventory Pro ngay hôm nay"}
+							</span>
+						</div>
 						<div className="mt-6 flex items-center gap-2">
 							<a
 								aria-label="Twitter"

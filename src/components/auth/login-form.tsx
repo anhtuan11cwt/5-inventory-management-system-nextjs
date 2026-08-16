@@ -21,11 +21,18 @@ type LoginErrors = {
 	password?: string[];
 };
 
-export function LoginForm({ verified = false }: { verified?: boolean }) {
+export function LoginForm({
+	verified = false,
+	invited = false,
+}: {
+	verified?: boolean;
+	invited?: boolean;
+}) {
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
 	const [errors, setErrors] = useState<LoginErrors>();
 	const verifiedShown = useRef(false);
+	const invitedShown = useRef(false);
 
 	useEffect(() => {
 		if (verified && !verifiedShown.current) {
@@ -35,6 +42,15 @@ export function LoginForm({ verified = false }: { verified?: boolean }) {
 			);
 		}
 	}, [verified]);
+
+	useEffect(() => {
+		if (invited && !invitedShown.current) {
+			invitedShown.current = true;
+			toast.success(
+				"Tài khoản đã được tạo thành công! Bạn có thể đăng nhập ngay bây giờ.",
+			);
+		}
+	}, [invited]);
 
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();

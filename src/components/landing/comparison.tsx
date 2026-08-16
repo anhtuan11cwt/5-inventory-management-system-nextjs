@@ -41,7 +41,7 @@ export function Comparison() {
 		>
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div className="mx-auto max-w-2xl text-center">
-					<p className="font-semibold text-emerald-600 text-sm uppercase tracking-wider">
+					<p className="font-semibold text-rose-600 text-sm uppercase tracking-wider">
 						Sự khác biệt
 					</p>
 					<h2 className="mt-2 text-balance font-bold font-heading text-3xl tracking-tight sm:text-4xl">
@@ -59,8 +59,8 @@ export function Comparison() {
 							Không dùng Inventory Pro
 						</p>
 						<p className="flex items-center gap-2 px-4 py-3 text-foreground sm:px-6">
-							<span className="inline-flex size-5 items-center justify-center rounded-full bg-emerald-500/15">
-								<Check className="size-3 text-emerald-600" />
+							<span className="inline-flex size-5 items-center justify-center rounded-full bg-rose-500/15">
+								<Check className="size-3 text-rose-600" />
 							</span>
 							Dùng Inventory Pro
 						</p>
@@ -81,7 +81,7 @@ export function Comparison() {
 								</div>
 							</div>
 							<div className="flex items-start gap-3 px-4 py-4 sm:px-6">
-								<Check className="mt-0.5 size-4 shrink-0 text-emerald-600" />
+								<Check className="mt-0.5 size-4 shrink-0 text-rose-600" />
 								<div>
 									<p className="font-medium">{row.label}</p>
 									<p className="mt-0.5 text-muted-foreground text-sm">

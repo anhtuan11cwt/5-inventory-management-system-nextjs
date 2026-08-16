@@ -1,11 +1,5 @@
 import { z } from "zod";
 
-/**
- * Regex tên người Việt Nam:
- * - Chỉ chấp nhận ký tự Latin (bao gồm chữ cái có dấu tiếng Việt) + dấu kết hợp
- * - Chặn homoglyph (Cyrillic/Greek), chữ số, emoji, ký tự điều khiển (tab/newline/NBSP/zero-width)
- * - Cho phép dấu gạch nối và dấu nháy đơn (tên nước ngoài: Jean-Pierre, Mary-Anne)
- */
 const VIETNAMESE_NAME_REGEX =
 	// biome-ignore lint/suspicious/noMisleadingCharacterClass: cho phép tên NFD chứa dấu kết hợp tiếng Việt
 	/^[\p{Script=Latin}][\p{Script=Latin}\u0300-\u036f'\- ]*$/u;
@@ -82,4 +76,28 @@ export type RegisterInput = z.infer<typeof registerSchema>;
 export const loginSchema = z.object({
 	email: emailSchema,
 	password: z.string("Vui lòng nhập mật khẩu").min(1, "Vui lòng nhập mật khẩu"),
+});
+
+export const invitedUserSchema = z
+	.object({
+		confirmPassword: confirmPasswordSchema,
+		email: emailSchema,
+		name: fullnameSchema,
+		password: passwordSchema,
+		phone: z
+			.string("Vui lòng nhập số điện thoại")
+			.trim()
+			.min(1, "Vui lòng nhập số điện thoại")
+			.regex(/^0\d{9,10}$/, "Số điện thoại không hợp lệ (vd: 0912345678)"),
+	})
+	.refine((data) => data.password === data.confirmPassword, {
+		message: "Mật khẩu xác nhận không khớp",
+		path: ["confirmPassword"],
+	});
+
+export type InvitedUserInput = z.infer<typeof invitedUserSchema>;
+
+export const inviteSchema = z.object({
+	email: emailSchema,
+	roleId: z.string().min(1, "Vui lòng chọn vai trò"),
 });

@@ -21,7 +21,7 @@ export async function proxy(request: NextRequest) {
 		if (!session?.user) {
 			return NextResponse.redirect(new URL("/login", request.url));
 		}
-		if (!canAccessRoute(session.user.role, pathname)) {
+		if (!canAccessRoute(session.user.permissions, pathname)) {
 			return NextResponse.redirect(new URL("/dashboard", request.url));
 		}
 	}

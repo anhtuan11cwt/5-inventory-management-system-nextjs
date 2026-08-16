@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { sendVerificationEmail } from "@/lib/email";
 import { generateOTP } from "@/lib/otp";
+import { ensureDefaultRoles } from "@/lib/roles";
 import { generateUniqueSlug } from "@/lib/slug";
 import { registerSchema } from "@/lib/validation";
 
@@ -74,6 +75,8 @@ export async function createUser(
 			},
 		});
 
+		const { adminRole } = await ensureDefaultRoles(organization.id);
+
 		const user = await db.user.create({
 			data: {
 				email,
@@ -82,7 +85,7 @@ export async function createUser(
 				organizationId: organization.id,
 				organizationName: organization.name,
 				password: passwordHash,
-				role: "USER",
+				roleId: adminRole.id,
 				token: otp,
 			},
 		});

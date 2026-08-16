@@ -111,7 +111,7 @@ export function Features() {
 		<section className="scroll-mt-20 py-20 sm:py-24" id="features">
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div className="mx-auto max-w-2xl text-center">
-					<p className="font-semibold text-emerald-600 text-sm uppercase tracking-wider">
+					<p className="font-semibold text-rose-600 text-sm uppercase tracking-wider">
 						Tính năng
 					</p>
 					<h2 className="mt-2 text-balance font-bold font-heading text-3xl tracking-tight sm:text-4xl">
@@ -161,7 +161,7 @@ export function Features() {
 											className="flex items-center gap-3 rounded-lg border border-border bg-background p-4 text-sm"
 											key={bullet}
 										>
-											<span className="size-2 shrink-0 rounded-full bg-emerald-500" />
+											<span className="size-2 shrink-0 rounded-full bg-rose-500" />
 											{bullet}
 										</li>
 									))}

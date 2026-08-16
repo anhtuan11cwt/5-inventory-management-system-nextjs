@@ -3,7 +3,7 @@ export function VideoDemo() {
 		<section className="scroll-mt-20 py-20 sm:py-24" id="demo">
 			<div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
 				<div className="mx-auto max-w-2xl text-center">
-					<p className="font-semibold text-emerald-600 text-sm uppercase tracking-wider">
+					<p className="font-semibold text-rose-600 text-sm uppercase tracking-wider">
 						Xem sản phẩm hoạt động
 					</p>
 					<h2 className="mt-2 text-balance font-bold font-heading text-3xl tracking-tight sm:text-4xl">

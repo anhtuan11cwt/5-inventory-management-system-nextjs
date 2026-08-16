@@ -30,7 +30,7 @@ export function LogoMark({ className }: { className?: string }) {
 				strokeWidth="2"
 			/>
 			<path
-				className="stroke-emerald-500"
+				className="stroke-rose-500"
 				d="M31 14l-11 6-4-2.2"
 				strokeLinecap="round"
 				strokeLinejoin="round"

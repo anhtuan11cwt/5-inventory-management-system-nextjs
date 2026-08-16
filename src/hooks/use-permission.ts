@@ -6,12 +6,13 @@ import { hasPermission, type Permission } from "@/config/permissions";
 
 export function usePermission() {
 	const { data: session } = useSession();
-	const role = session?.user?.role;
+	const permissions = session?.user?.permissions ?? [];
 
 	return {
-		has: (permission: Permission) => hasPermission(role, permission),
+		has: (permission: Permission) => hasPermission(permissions, permission),
 		organizationId: session?.user?.organizationId,
 		organizationName: session?.user?.organizationName,
-		role,
+		permissions,
+		roleName: session?.user?.roleName,
 	};
 }

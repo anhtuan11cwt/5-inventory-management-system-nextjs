@@ -1,10 +1,11 @@
 "use client";
 
-import { Building2, ChevronDown, LogOut, Menu } from "lucide-react";
+import { ChevronDown, LogOut, Menu } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
+import { OrganizationBanner } from "@/components/dashboard/organization-banner";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -49,11 +50,8 @@ export function Topbar() {
 					<Menu />
 				</Button>
 
-				<div className="hidden min-w-0 items-center gap-2 text-muted-foreground text-sm sm:flex">
-					<Building2 className="size-4 shrink-0" />
-					<span className="truncate font-medium text-foreground">
-						{session?.user?.organizationName ?? "Tổ chức"}
-					</span>
+				<div className="hidden min-w-0 sm:flex">
+					<OrganizationBanner />
 				</div>
 
 				<div className="ml-auto flex items-center gap-2">

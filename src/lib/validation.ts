@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export type FieldErrors = Record<string, string[] | undefined>;
+
 const VIETNAMESE_NAME_REGEX =
 	// biome-ignore lint/suspicious/noMisleadingCharacterClass: cho phép tên NFD chứa dấu kết hợp tiếng Việt
 	/^[\p{Script=Latin}][\p{Script=Latin}\u0300-\u036f'\- ]*$/u;
@@ -100,4 +102,75 @@ export type InvitedUserInput = z.infer<typeof invitedUserSchema>;
 export const inviteSchema = z.object({
 	email: emailSchema,
 	roleId: z.string().min(1, "Vui lòng chọn vai trò"),
+});
+
+export const unitSchema = z.object({
+	name: z
+		.string("Vui lòng nhập tên đơn vị")
+		.trim()
+		.min(1, "Vui lòng nhập tên đơn vị")
+		.max(50),
+	symbol: z
+		.string()
+		.trim()
+		.max(10, "Ký hiệu quá dài")
+		.optional()
+		.or(z.literal("")),
+});
+
+export const brandSchema = z.object({
+	name: z
+		.string("Vui lòng nhập tên thương hiệu")
+		.trim()
+		.min(1, "Vui lòng nhập tên thương hiệu")
+		.max(100),
+});
+
+export const categorySchema = z.object({
+	description: z.string().trim().max(500).optional().or(z.literal("")),
+	imageUrl: z
+		.string()
+		.trim()
+		.url("Vui lòng nhập URL hình ảnh hợp lệ")
+		.optional()
+		.or(z.literal("")),
+	slug: z.string().trim().max(120).optional().or(z.literal("")),
+	title: z
+		.string("Vui lòng nhập tên danh mục")
+		.trim()
+		.min(1, "Vui lòng nhập tên danh mục")
+		.max(100),
+});
+
+export const taxRateSchema = z.object({
+	name: z
+		.string("Vui lòng nhập tên thuế suất")
+		.trim()
+		.min(1, "Vui lòng nhập tên thuế suất")
+		.max(50),
+	rate: z.coerce
+		.number()
+		.min(0, "Giá trị phải từ 0")
+		.max(100, "Giá trị tối đa 100"),
+});
+
+export const itemSchema = z.object({
+	costPrice: z.coerce.number().min(15000, "Giá vốn tối thiểu là 15.000đ"),
+	name: z
+		.string("Vui lòng nhập tên mặt hàng")
+		.trim()
+		.min(1, "Vui lòng nhập tên mặt hàng")
+		.max(200),
+	sellingPrice: z.coerce.number().min(15000, "Giá bán tối thiểu là 15.000đ"),
+	sku: z
+		.string("Vui lòng nhập mã SKU")
+		.trim()
+		.min(1, "Vui lòng nhập mã SKU")
+		.max(50),
+	thumbnail: z
+		.string()
+		.trim()
+		.url("Vui lòng nhập URL hình ảnh hợp lệ")
+		.optional()
+		.or(z.literal("")),
 });

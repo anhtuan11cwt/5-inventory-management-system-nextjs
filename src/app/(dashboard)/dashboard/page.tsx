@@ -102,11 +102,13 @@ export default async function DashboardPage() {
 	const permissions = session?.user?.permissions ?? [];
 
 	if (!hasPermission(permissions, "dashboard.read")) {
-		const cards = filteredSidebarLinks(permissions).map((item) => ({
-			href: item.href,
-			icon: item.icon,
-			title: item.title,
-		}));
+		const cards = filteredSidebarLinks(permissions)
+			.flatMap((item) => item.items ?? (item.href ? [item] : []))
+			.map((item) => ({
+				href: item.href ?? "/dashboard",
+				icon: item.icon,
+				title: item.title,
+			}));
 
 		return (
 			<DefaultUserDashboard
@@ -126,37 +128,39 @@ export default async function DashboardPage() {
 					Đây là tình hình tại{" "}
 					<span className="font-medium text-foreground">
 						{session?.user?.organizationName}
-					</span>{" "}
-					({session?.user?.organizationId}).
+					</span>
+					.
 				</p>
 			</div>
 
 			<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
 				{stats.map((stat) => (
 					<Card key={stat.label}>
-						<CardContent className="flex items-center justify-between gap-4 p-5">
-							<div>
-								<p className="text-muted-foreground text-sm">{stat.label}</p>
-								<p className="mt-1 font-semibold text-2xl tracking-tight">
-									{stat.value}
-								</p>
-								<p
-									className={
-										stat.trend === "up"
-											? "mt-1 inline-flex items-center gap-1 font-medium text-rose-600 text-xs"
-											: "mt-1 inline-flex items-center gap-1 font-medium text-destructive text-xs"
-									}
-								>
-									{stat.trend === "up" ? (
-										<ArrowUpRight className="size-3" />
-									) : (
-										<ArrowDownRight className="size-3" />
-									)}
-									{stat.change} so với tháng trước
-								</p>
-							</div>
-							<div className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
-								<stat.icon className="size-5" />
+						<CardContent className="p-5">
+							<div className="flex items-center gap-4">
+								<div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+									<stat.icon className="size-5" />
+								</div>
+								<div className="min-w-0">
+									<p className="text-muted-foreground text-sm">{stat.label}</p>
+									<p className="mt-1 font-semibold text-2xl tracking-tight">
+										{stat.value}
+									</p>
+									<p
+										className={
+											stat.trend === "up"
+												? "mt-1 inline-flex items-center gap-1 font-medium text-rose-600 text-xs"
+												: "mt-1 inline-flex items-center gap-1 font-medium text-destructive text-xs"
+										}
+									>
+										{stat.trend === "up" ? (
+											<ArrowUpRight className="size-3" />
+										) : (
+											<ArrowDownRight className="size-3" />
+										)}
+										{stat.change} so với tháng trước
+									</p>
+								</div>
 							</div>
 						</CardContent>
 					</Card>

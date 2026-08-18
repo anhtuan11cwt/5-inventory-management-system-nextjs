@@ -1,47 +1,106 @@
 export type Permission =
 	| "dashboard.read"
-	| "products.read"
-	| "products.write"
 	| "inventory.read"
-	| "inventory.write"
+	| "items.read"
+	| "items.write"
+	| "categories.read"
+	| "categories.write"
+	| "brands.read"
+	| "brands.write"
+	| "units.read"
+	| "units.write"
+	| "stock.read"
+	| "serial.read"
+	| "transfers.read"
+	| "transfers.write"
+	| "adjustments.read"
+	| "adjustments.write"
 	| "sales.read"
+	| "sales.write"
 	| "purchases.read"
+	| "purchases.write"
 	| "reports.read"
+	| "integrations.read"
 	| "users.read"
 	| "users.write"
+	| "roles.read"
+	| "roles.write"
+	| "tax.read"
+	| "tax.write"
+	| "locations.read"
+	| "locations.write"
+	| "suppliers.read"
+	| "suppliers.write"
 	| "settings.read";
 
 export const adminPermissions: Permission[] = [
 	"dashboard.read",
-	"products.read",
-	"products.write",
 	"inventory.read",
-	"inventory.write",
+	"items.read",
+	"items.write",
+	"categories.read",
+	"categories.write",
+	"brands.read",
+	"brands.write",
+	"units.read",
+	"units.write",
+	"stock.read",
+	"serial.read",
+	"transfers.read",
+	"transfers.write",
+	"adjustments.read",
+	"adjustments.write",
 	"sales.read",
+	"sales.write",
 	"purchases.read",
+	"purchases.write",
 	"reports.read",
+	"integrations.read",
 	"users.read",
 	"users.write",
+	"roles.read",
+	"roles.write",
+	"tax.read",
+	"tax.write",
+	"locations.read",
+	"locations.write",
+	"suppliers.read",
+	"suppliers.write",
 	"settings.read",
 ];
 
 export const defaultUserPermissions: Permission[] = [
 	"dashboard.read",
-	"products.read",
 	"inventory.read",
+	"items.read",
+	"categories.read",
+	"brands.read",
+	"units.read",
+	"stock.read",
 	"sales.read",
 	"purchases.read",
+	"reports.read",
 ];
 
 export const routePermissions: Record<string, Permission> = {
+	"/dashboard/integrations": "integrations.read",
 	"/dashboard/inventory": "inventory.read",
-	"/dashboard/products": "products.read",
-	"/dashboard/products/new": "products.write",
+	"/dashboard/inventory/adjustments": "adjustments.read",
+	"/dashboard/inventory/brands": "brands.read",
+	"/dashboard/inventory/categories": "categories.read",
+	"/dashboard/inventory/current-stock": "stock.read",
+	"/dashboard/inventory/items": "items.read",
+	"/dashboard/inventory/low-stock": "stock.read",
+	"/dashboard/inventory/transfers": "transfers.read",
+	"/dashboard/inventory/units": "units.read",
 	"/dashboard/purchases": "purchases.read",
 	"/dashboard/reports": "reports.read",
 	"/dashboard/sales": "sales.read",
 	"/dashboard/settings": "settings.read",
-	"/dashboard/users": "users.read",
+	"/dashboard/settings/locations": "locations.read",
+	"/dashboard/settings/roles": "roles.read",
+	"/dashboard/settings/tax-rates": "tax.read",
+	"/dashboard/settings/users": "users.read",
 };
 
 export function hasPermission(

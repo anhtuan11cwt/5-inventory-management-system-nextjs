@@ -22,9 +22,17 @@ model Organization {
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
 
-  users   User[]
-  roles   Role[]
-  invites Invite[]
+  users          User[]
+  roles          Role[]
+  invites        Invite[]
+  locations      Location[]
+  units          Unit[]
+  brands         Brand[]
+  categories     Category[]
+  taxRates       TaxRate[]
+  suppliers      Supplier[]
+  items          Item[]
+  serialNumbers  SerialNumber[]
 
   @@map("organizations")
 }
@@ -74,4 +82,167 @@ model User {
   updatedAt        DateTime     @updatedAt
 
   @@map("users")
+}
+
+model Location {
+  id             String       @id @default(cuid())
+  name           String
+  type           String       @default("WAREHOUSE")
+  address        String?
+  phone          String?
+  email          String?
+  isActive       Boolean      @default(true)
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  serialNumbers SerialNumber[]
+
+  @@map("locations")
+}
+
+model Unit {
+  id             String       @id @default(cuid())
+  name           String
+  symbol         String?
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  items Item[]
+
+  @@map("units")
+}
+
+model Brand {
+  id             String       @id @default(cuid())
+  name           String
+  slug           String
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  items Item[]
+
+  @@unique([organizationId, slug])
+  @@map("brands")
+}
+
+model Category {
+  id             String       @id @default(cuid())
+  title          String
+  slug           String
+  description    String?
+  imageUrl       String?
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  items Item[]
+
+  @@unique([organizationId, slug])
+  @@map("categories")
+}
+
+model TaxRate {
+  id             String       @id @default(cuid())
+  name           String
+  rate           Float
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  items Item[]
+
+  @@map("tax_rates")
+}
+
+model Supplier {
+  id             String       @id @default(cuid())
+  name           String
+  email          String?
+  phone          String?
+  address        String?
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  items ItemSupplier[]
+
+  @@map("suppliers")
+}
+
+model ItemSupplier {
+  itemId     String
+  supplierId String
+
+  item     Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  supplier Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+
+  @@id([itemId, supplierId])
+  @@map("item_suppliers")
+}
+
+model Item {
+  id             String       @id @default(cuid())
+  name           String
+  sku            String
+  barcode        String?
+  description    String?
+  categoryId     String?
+  category       Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  brandId        String?
+  brand          Brand?       @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  unitId         String?
+  unit           Unit?        @relation(fields: [unitId], references: [id], onDelete: SetNull)
+  taxRateId      String?
+  taxRate        TaxRate?     @relation(fields: [taxRateId], references: [id], onDelete: SetNull)
+  costPrice      Float        @default(0)
+  sellingPrice   Float        @default(0)
+  minStockLevel  Int?         @default(0)
+  maxStockLevel  Int?         @default(0)
+  isSerialTrack  Boolean      @default(false)
+  isActive       Boolean      @default(true)
+  dimensions     String?
+  weight         Float?
+  upc            String?
+  ean            String?
+  isbn           String?
+  mpn            String?
+  imageUrls      String[]     @default([])
+  thumbnail      String?
+  imageUrl       String?
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  suppliers     ItemSupplier[]
+  serialNumbers SerialNumber[]
+
+  @@unique([organizationId, sku])
+  @@map("items")
+}
+
+model SerialNumber {
+  id              String       @id @default(cuid())
+  serialNumber    String
+  status          String       @default("IN_STOCK")
+  itemId          String
+  item            Item         @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  locationId      String
+  location        Location     @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  purchaseOrderId String?
+  salesOrderId    String?
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt       DateTime     @default(now())
+
+  @@map("serial_numbers")
 }
